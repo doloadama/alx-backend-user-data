@@ -23,7 +23,6 @@ class RedactingFormatter(logging.Formatter):
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
-
     def format(self, record: logging.LogRecord) -> str:
         """
         redact the message of LogRecord instance
@@ -38,10 +37,12 @@ class RedactingFormatter(logging.Formatter):
                                 message, self.SEPARATOR)
         return redacted
 
+
 def filter_datum(fields: List[str],
-                redaction: str,
-                message: str,
-                separator: str):
+                 redaction: str,
+                 message: str,
+                 separator: str
+                ):
     """
     Args:
         fields (List[str]): list of all fields to obfuscate
@@ -68,6 +69,7 @@ def get_logger() -> logging.getLogger:
     logger.addHandler(handler)
     return logger
 
+
 def get_db():
     """
     returns a connector to the database
@@ -81,6 +83,7 @@ def get_db():
                                    host=host,
                                    database=db_name)
     return conn
+
 
 def main():
     """
