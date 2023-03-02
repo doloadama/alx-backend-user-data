@@ -41,8 +41,7 @@ class RedactingFormatter(logging.Formatter):
 def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
-                 separator: str
-                ):
+                 separator: str):
     """
     Args:
         fields (List[str]): list of all fields to obfuscate
