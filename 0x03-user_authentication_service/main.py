@@ -6,11 +6,6 @@ from user import User
 from db import DB
 
 
-print(User.__tablename__)
-
-for column in User.__table__.columns:
-    print("{}: {}".format(column, column.type))
-
 my_db = DB()
 
 user_1 = my_db.add_user("test@test.com", "SuperHashedPwd")
