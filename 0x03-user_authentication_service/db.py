@@ -42,7 +42,7 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """
-        Returns first rrow found in users table
+        Returns first row found in users table
         as filtered by methods input arguments
         """
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
