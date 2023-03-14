@@ -9,6 +9,9 @@ from user import Base, User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
+VALID = ['id', 'email', 'hashed_password', 'session_id',
+                'reset_token']
+
 
 class DB:
     """DB class
@@ -48,15 +51,13 @@ class DB:
         Returns first row found in users table
         as filtered by methods input arguments
         """
-        user_keys = ['id', 'email', 'hashed_password', 'session_id',
-                     'reset_token']
-        for key in kwargs.keys():
-            if key not in user_keys:
-                raise InvalidRequestError
-        result = self._session.query(User).filter_by(**kwargs).first()
-        if result is None:
+        if not kwargs or any(x not in VALID for x in kwargs):
+            raise InvalidRequestError
+        session = self._session
+        try:
+            return session.query(User).filter_by(**kwargs).one()
+        except Exception:
             raise NoResultFound
-        return result
 
     def update_user(self, user_id: int, **kwargs) -> User:
         """
