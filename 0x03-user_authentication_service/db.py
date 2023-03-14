@@ -35,9 +35,12 @@ class DB:
         """
         Add a new user to the database.
         """
+        if not email or not hashed_password:
+            return
         user = User(email=email, hashed_password=hashed_password)
-        self._session.add(user)
-        self._session.commit()
+        session = self._session
+        session.add(user)
+        session.commit()
         return user
 
     def find_user_by(self, **kwargs) -> User:
