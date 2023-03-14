@@ -63,12 +63,10 @@ class DB:
         """
         Updates a user in the database.
         """
-        user_to_update = self.find_user_by(id=user_id)
-        user_keys = ['id', 'email', 'hashed_password', 'session_id',
-                     'reset_token']
-        for key, value in kwargs.items():
-            if key in user_keys:
-                setattr(user_to_update, key, value)
-            else:
-                raise ValueError
-        self._session.commit()
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError as e:
+            raise InvalidRequestError(str(e))
