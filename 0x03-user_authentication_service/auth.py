@@ -3,9 +3,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import bcrypt
-from user import User
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
+from user import Base, User
 
 
 def __hash_password(password: str) -> bytes:
@@ -28,7 +28,7 @@ class Auth:
 
     def resgister_user(self, email: str, password: str) -> User:
         """
-        take mandatory email and password string arguments and 
+        take mandatory email and password string arguments and
         return a User object.
         If a user already exist with the passed email, raise a
         ValueError with the message User <user's email> already exists
